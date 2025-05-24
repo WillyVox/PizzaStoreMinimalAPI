@@ -20,13 +20,15 @@ if (app.Environment.IsDevelopment())
 
 // Using: http://localhost:5112/
 app.MapGet("/", () => "Hello World!");
-
-// app.MapGet("/products", () => data);
+// Using http://localhost:5112/pizzas/1
 app.MapGet("/pizzas/{id}", (int id) => PizzaDB.GetPizza(id));
 // Using: http://localhost:5112/pizzas
 app.MapGet("/pizzas", () => PizzaDB.GetPizzas());
+// Using curl -X POST http://localhost:5112/pizzas -H "Content-Type: application/json" -d '{"name":"Best Pizza Ever","id": 4 }'
 app.MapPost("/pizzas", (Pizza pizza) => PizzaDB.CreatePizza(pizza));
+// Using: $ curl -X PUT http://localhost:5112/pizzas -H "Content-Type: application/json" -d '{"id":4,"name":"So full now"}'
 app.MapPut("/pizzas", (Pizza pizza) => PizzaDB.UpdatePizza(pizza));
+// Using: $ curl -X DELETE http://localhost:5112/pizzas/4
 app.MapDelete("/pizzas/{id}", (int id) => PizzaDB.RemovePizza(id));
 
 app.Run();
